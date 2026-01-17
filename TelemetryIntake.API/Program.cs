@@ -6,6 +6,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.AddDocumentationServices();
 builder.ConfigureDependencyInjectionServices();
+builder.ConfigureHealthCheckServices();
 
 var app = builder.Build();
 
@@ -14,5 +15,6 @@ app.ConfigureDocumentation();
 app.UseHttpsRedirection();
 
 app.MapDataEndpoints();
+app.MapHealthCheckEndpoints();
 
 app.Run();

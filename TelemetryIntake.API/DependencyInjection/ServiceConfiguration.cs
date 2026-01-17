@@ -1,4 +1,5 @@
-﻿using TelemetryIntake.Application.Messaging;
+﻿using TelemetryIntake.API.HealthChecks;
+using TelemetryIntake.Application.Messaging;
 using TelemetryIntake.Domain.Interfaces.Messaging;
 using TelemetryIntake.Infrastructure.Messaging;
 
@@ -10,5 +11,10 @@ public static class ServiceConfiguration
 	{
 		applicationBuilder.Services.AddTransient<ITelemetryIngestionService, TelemetryIngestionService>();
 		applicationBuilder.Services.AddTransient<ITelemetryPublisher, TelemetryPublisher>();
+	}
+
+	public static void ConfigureHealthCheckServices(this IHostApplicationBuilder applicationBuilder)
+	{
+		applicationBuilder.Services.AddHealthChecks().AddCheck<QueueHealthCheck>("QueueHealthCheck");
 	}
 }
