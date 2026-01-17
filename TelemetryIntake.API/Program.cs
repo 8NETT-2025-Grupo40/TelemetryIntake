@@ -5,6 +5,7 @@ using TelemetryIntake.API.Setup;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.AddDocumentationServices();
+builder.ConfigureDependencyInjectionServices();
 
 var app = builder.Build();
 

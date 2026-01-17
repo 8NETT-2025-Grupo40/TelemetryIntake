@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using TelemetryIntake.Domain.Entities;
+using TelemetryIntake.Domain.Interfaces.Messaging;
 
 namespace TelemetryIntake.API.Endpoints;
 
@@ -17,10 +18,13 @@ public static class TelemetryEndpoints
 			.Produces<ProblemDetails>(StatusCodes.Status400BadRequest);
 	}
 
-	private static IResult ReceiveSensorData([FromBody] SensorData sensorData)
+	private static async ValueTask<IResult> ReceiveSensorData(
+		[FromBody] SensorData sensorData,
+		ITelemetryIngestionService telemetryIngestionService)
 	{
 		try
 		{
+			await telemetryIngestionService.SendSensorDataToQueueAsync(sensorData);
 			return Results.NoContent();
 		}
 		catch (Exception e)
