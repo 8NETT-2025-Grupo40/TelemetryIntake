@@ -1,4 +1,6 @@
-﻿namespace TelemetryIntake.API.DependencyInjection;
+﻿using Swashbuckle.AspNetCore.Filters;
+
+namespace TelemetryIntake.API.DependencyInjection;
 
 public static class DocumentationServices
 {
@@ -6,6 +8,8 @@ public static class DocumentationServices
 	{
 		applicationBuilder.Services.AddOpenApi();
 		applicationBuilder.Services.AddEndpointsApiExplorer();
-		applicationBuilder.Services.AddSwaggerGen();
+		applicationBuilder.Services.AddSwaggerGen(options => options.ExampleFilters());
+
+		applicationBuilder.Services.AddSwaggerExamplesFromAssemblyOf<Program>();
 	}
 }
