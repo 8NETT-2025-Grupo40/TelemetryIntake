@@ -486,3 +486,5 @@ $RECYCLE.BIN/
 # Ignore all bin and obj folders in any project
 **/bin/
 **/obj/
+
+*.trx
