@@ -1,4 +1,9 @@
 <Solution>
+  <Folder Name="/Git/">
+    <File Path=".github/workflows/telemetry-intake.yml" />
+    <File Path=".gitignore" />
+    <File Path="README.md" />
+  </Folder>
   <Folder Name="/Source/">
     <Project Path="TelemetryIntake.API/TelemetryIntake.API.csproj" />
     <Project Path="TelemetryIntake.Application/TelemetryIntake.Application.csproj" Id="3e00452f-e21c-48ae-8c68-d61b1090c04a" />
