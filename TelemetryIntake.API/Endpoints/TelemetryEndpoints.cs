@@ -23,7 +23,7 @@ public static class TelemetryEndpoints
 			.RequireAuthorization("TelemetryWrite");
 	}
 
-	private static async ValueTask<IResult> ReceiveSensorData(
+	public static async ValueTask<IResult> ReceiveSensorData(
 		[FromBody] SensorData sensorData,
 		ITelemetryIngestionService telemetryIngestionService)
 	{

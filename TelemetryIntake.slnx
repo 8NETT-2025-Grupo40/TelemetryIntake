@@ -5,5 +5,7 @@
     <Project Path="TelemetryIntake.Domain/TelemetryIntake.Domain.csproj" Id="1a2d6df6-99a9-40c8-a497-f2468849aff6" />
     <Project Path="TelemetryIntake.Infrastructure/TelemetryIntake.Infrastructure.csproj" Id="228b3afd-d34b-42fc-aa65-e85fc6d4b5f6" />
   </Folder>
-  <Folder Name="/Unit Tests/" />
+  <Folder Name="/Unit Tests/">
+    <Project Path="TelemetryIntake.Tests/TelemetryIntake.Tests.csproj" Id="6d46cf9a-7a62-47bc-aef0-b9d289ee2793" />
+  </Folder>
 </Solution>
