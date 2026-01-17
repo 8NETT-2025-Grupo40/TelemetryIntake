@@ -1,4 +1,8 @@
 <Solution>
+  <Folder Name="/Docker/">
+    <File Path=".dockerignore" />
+    <File Path="Dockerfile" />
+  </Folder>
   <Folder Name="/Git/">
     <File Path=".github/workflows/telemetry-intake.yml" />
     <File Path=".gitignore" />
