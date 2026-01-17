@@ -1,20 +1,53 @@
-name: telemetry-intake
-on: [push]
+name: Telemetry Intake CI/CD Pipeline
+on:
+  push:
+    branches: [ 'main' ]
+  pull_request:
+    types: [opened, synchronize]
+  workflow_dispatch:
+
 jobs:
   build:
+    name: Build solution
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        dotnet-version: ['10.0.x']
     steps:
       - uses: actions/checkout@v5
       - name: Setup dotnet ${{ matrix.dotnet-version }}
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: ${{ matrix.dotnet-version }}
+          dotnet-version: '10.0.x'
 
       - name: Install dependencies
         run: dotnet restore
 
       - name: Build solution
-        run: dotnet build --no-restore
+        run: dotnet build --no-restore --configuration Release
+
+  unit-tests:
+    name: Run unit tests
+    needs: [build]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - name: Setup dotnet ${{ matrix.dotnet-version }}
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Install dependencies
+        run: dotnet restore
+
+      - name: Build solution
+        run: dotnet build --no-restore --configuration Release
+      
+      - name: Run unit tests
+        run: dotnet test --results-directory ./ -l:trx;LogFileName=TestOutput.trx
+
+      - name: Create Test Report
+        uses: dorny/test-reporter@v2
+        if: always()
+        with:
+          name: .NET Tests Report
+          path: "**/*.trx"
+          reporter: dotnet-trx
+          fail-on-error: false
