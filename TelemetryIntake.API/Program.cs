@@ -7,6 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.AddDocumentationServices();
 builder.ConfigureDependencyInjectionServices();
 builder.ConfigureHealthCheckServices();
+builder.ConfigureLogging();
 
 var app = builder.Build();
 
