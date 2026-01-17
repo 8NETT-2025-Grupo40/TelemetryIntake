@@ -1,4 +1,5 @@
-﻿using Swashbuckle.AspNetCore.Filters;
+﻿using Microsoft.OpenApi;
+using Swashbuckle.AspNetCore.Filters;
 
 namespace TelemetryIntake.API.DependencyInjection;
 
@@ -8,7 +9,17 @@ public static class DocumentationServices
 	{
 		applicationBuilder.Services.AddOpenApi();
 		applicationBuilder.Services.AddEndpointsApiExplorer();
-		applicationBuilder.Services.AddSwaggerGen(options => options.ExampleFilters());
+		applicationBuilder.Services.AddSwaggerGen(options =>
+		{
+			options.ExampleFilters();
+			options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+			{
+				Type = SecuritySchemeType.Http,
+				Scheme = "bearer",
+				BearerFormat = "JWT",
+				In = ParameterLocation.Header,
+			});
+		});
 
 		applicationBuilder.Services.AddSwaggerExamplesFromAssemblyOf<Program>();
 	}

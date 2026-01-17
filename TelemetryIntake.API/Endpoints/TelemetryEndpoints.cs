@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using TelemetryIntake.API.Swagger;
 using TelemetryIntake.Domain.Entities;
 using TelemetryIntake.Domain.Interfaces.Messaging;
 
@@ -15,7 +16,11 @@ public static class TelemetryEndpoints
 			.WithName("ReceiveSensorData")
 			.WithSummary("Receive sensor data from farms.")
 			.Produces(StatusCodes.Status204NoContent)
-			.Produces<ProblemDetails>(StatusCodes.Status400BadRequest);
+			.Produces(StatusCodes.Status401Unauthorized)
+			.Produces(StatusCodes.Status403Forbidden)
+			.Produces<ProblemDetails>(StatusCodes.Status400BadRequest)
+			.WithMetadata(StatusCodes.Status400BadRequest, typeof(BadRequestExample))
+			.RequireAuthorization("TelemetryWrite");
 	}
 
 	private static async ValueTask<IResult> ReceiveSensorData(

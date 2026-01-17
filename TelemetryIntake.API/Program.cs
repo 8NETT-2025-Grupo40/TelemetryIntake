@@ -8,6 +8,7 @@ builder.AddDocumentationServices();
 builder.ConfigureDependencyInjectionServices();
 builder.ConfigureHealthCheckServices();
 builder.ConfigureLogging();
+builder.ConfigureCognitoM2MAuthentication();
 
 var app = builder.Build();
 
