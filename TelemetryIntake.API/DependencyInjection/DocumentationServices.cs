@@ -19,6 +19,11 @@ public static class DocumentationServices
 				BearerFormat = "JWT",
 				In = ParameterLocation.Header,
 			});
+
+			options.AddSecurityRequirement(document => new OpenApiSecurityRequirement
+			{
+				[new OpenApiSecuritySchemeReference("Bearer", document)] = []
+			});
 		});
 
 		applicationBuilder.Services.AddSwaggerExamplesFromAssemblyOf<Program>();

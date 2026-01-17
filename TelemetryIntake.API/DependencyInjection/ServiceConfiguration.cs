@@ -123,6 +123,6 @@ public static class ServiceConfiguration
 					var scopes = context.User.FindFirst("scope")?.Value ?? "";
 					return scopes.Contains("api/telemetry.write", StringComparison.Ordinal);
 				});
-			}) ;
+			});
 	}
 }
