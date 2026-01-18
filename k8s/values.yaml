@@ -41,7 +41,7 @@ ingress:
     # target-type: ip = ALB roteia diretamente para IPs dos pods (mais eficiente)
     alb.ingress.kubernetes.io/target-type: ip
     # group.name: permite múltiplos Ingress compartilharem o mesmo ALB
-    # Todas as APIs com group.name=fcg usarão o mesmo ALB
+    # Todas as APIs com group.name=#PREENCHER usarão o mesmo ALB
     alb.ingress.kubernetes.io/group.name: #PREENCHER
     # healthcheck-path: endpoint usado pelo ALB para verificar saúde dos pods
     alb.ingress.kubernetes.io/healthcheck-path: /health
@@ -80,8 +80,8 @@ env:
 # São gerenciados pelo External Secrets Operator que sincroniza do AWS Secrets Manager:
 # 
 # Secrets necessários no AWS Secrets Manager:
-# 1. fcg-api-user-connection-string: connection string do banco RDS
-# 2. fcg-jwt-config: JSON com { "issuer", "audience", "key" }
+# 1. telemetry-intake-api-user-connection-string: connection string do banco RDS
+# 2. fcg-jwt-config: JSON com { "issuer", "audience", "key" } #PREENCHER E MUDAR
 secrets:
   # Deixe vazio - External Secrets faz a sincronização automaticamente
 
