@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using TelemetryIntake.API.Sensor.Entities;
 using TelemetryIntake.API.Swagger;
-using TelemetryIntake.Domain.Entities;
 using TelemetryIntake.Domain.Interfaces.Messaging;
 
 namespace TelemetryIntake.API.Endpoints;
@@ -24,12 +24,12 @@ public static class TelemetryEndpoints
 	}
 
 	public static async ValueTask<IResult> ReceiveSensorData(
-		[FromBody] SensorData sensorData,
+		[FromBody] SensorReading sensorReading,
 		ITelemetryIngestionService telemetryIngestionService)
 	{
 		try
 		{
-			await telemetryIngestionService.SendSensorDataToQueueAsync(sensorData);
+			await telemetryIngestionService.SendSensorDataToQueueAsync(sensorReading);
 			return Results.NoContent();
 		}
 		catch (Exception e)

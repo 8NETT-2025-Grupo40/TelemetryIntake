@@ -1,4 +1,4 @@
-﻿using TelemetryIntake.Domain.Entities;
+﻿using TelemetryIntake.Domain.Sensor.Entities;
 
 namespace TelemetryIntake.Domain.Interfaces.Messaging;
 

@@ -1,5 +1,5 @@
-﻿using TelemetryIntake.Domain.Entities;
-using TelemetryIntake.Domain.Interfaces.Messaging;
+﻿using TelemetryIntake.Domain.Interfaces.Messaging;
+using TelemetryIntake.Domain.Sensor.Entities;
 
 namespace TelemetryIntake.Infrastructure.Messaging;
 
