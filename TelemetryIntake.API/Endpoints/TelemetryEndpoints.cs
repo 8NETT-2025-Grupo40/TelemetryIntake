@@ -38,7 +38,8 @@ public static class TelemetryEndpoints
 			{
 				Title = e.Message,
 				Status = StatusCodes.Status400BadRequest,
-				Detail = e.ToString()
+				Detail = e.ToString(),
+				Type = string.Empty
 			};
 
 			return Results.BadRequest(problemDetails);
