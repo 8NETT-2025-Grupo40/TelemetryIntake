@@ -1,6 +1,4 @@
-﻿using System.Text.Json.Serialization;
-
-namespace TelemetryIntake.Domain.Sensor.Entities;
+﻿namespace TelemetryIntake.Domain.Sensor.Entities;
 
 public class SensorData(
 	Guid sensorId,

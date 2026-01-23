@@ -125,4 +125,10 @@ public static class ServiceConfiguration
 				});
 			});
 	}
+
+	public static void ConfigureSqsOptions(this IHostApplicationBuilder applicationBuilder)
+	{
+		var sqsOptions = applicationBuilder.Configuration.GetSection("SQS");
+		applicationBuilder.Services.Configure<SqsOptions>(sqsOptions);
+	}
 }
