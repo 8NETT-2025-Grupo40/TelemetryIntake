@@ -30,7 +30,7 @@ public static class TelemetryEndpoints
 		try
 		{
 			await telemetryIngestionService.SendSensorDataToQueueAsync(sensorReading);
-			return Results.NoContent();
+			return Results.Accepted();
 		}
 		catch (Exception e)
 		{
