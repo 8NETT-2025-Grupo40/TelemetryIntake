@@ -6,7 +6,6 @@ using Microsoft.Extensions.Options;
 using System.Text.Json;
 using TelemetryIntake.Domain.Interfaces.Messaging;
 using TelemetryIntake.Domain.Sensor.Entities;
-using TelemetryIntake.Infrastructure.Sensor.Entitites;
 
 namespace TelemetryIntake.Infrastructure.Messaging;
 
@@ -33,8 +32,7 @@ public class TelemetryPublisher : ITelemetryPublisher
 			throw new Exception("Queue name is empty - Data not sent");
 		}
 
-		var queueSensorData = new QueueSensorData(queueName, sensorData);
-		await SendMessage(JsonSerializer.Serialize(queueSensorData));
+		await SendMessage(JsonSerializer.Serialize(sensorData));
 	}
 
 	private async ValueTask SendMessage(string jsonMessage)

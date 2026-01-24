@@ -13,18 +13,18 @@ public class TelemetryEndpointsTests
 	private static readonly Guid _sensorId = Guid.Parse("2D964D65-15C2-4836-BAAA-D9D7B0CF80D0");
 	private static readonly Guid _farmId = Guid.Parse("49072487-10AE-4E48-8B10-50F076752D45");
 	private static readonly Guid _fieldId = Guid.Parse("7395FBD7-074B-4A2D-B7C2-92A16D2BDEA6");
-	private static readonly string _airTemperature = "20";
-	private static readonly string _airHumidity = "50";
-	private static readonly string _soilTemperature = "25";
-	private static readonly string _soilHumidity = "75";
-	private static readonly string _rainMm = "10";
+	private static readonly double _airTemperature = 20;
+	private static readonly double _airHumidity = 50;
+	private static readonly double _soilTemperature = 25;
+	private static readonly double _soilHumidity = 75;
+	private static readonly double _rainMm = 10;
 
 	private readonly SensorReading _sensorReading = new()
 	{
 		SensorId = _sensorId,
 		FarmId = _farmId,
 		FieldId = _fieldId,
-		DateTime = DateTime.Now,
+		Timestamp = DateTime.Now,
 		AirTemperature = _airTemperature,
 		AirHumidity = _airHumidity,
 		SoilTemperature = _soilTemperature,
@@ -56,7 +56,7 @@ public class TelemetryEndpointsTests
 		// Assert
 		await telemetryIngestionServiceMock.Received(expectedNumberOfCalls).SendSensorDataToQueueAsync(expectedSensorData);
 
-		_ = Assert.IsType<NoContent>(response);
+		_ = Assert.IsType<Accepted>(response);
 	}
 
 	[Fact]

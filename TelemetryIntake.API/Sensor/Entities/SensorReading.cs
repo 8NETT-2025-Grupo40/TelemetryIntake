@@ -15,28 +15,28 @@ public class SensorReading
 	public Guid FieldId { get; set; }
 
 	[JsonPropertyName("DateTime")]
-	public DateTime DateTime { get; set; }
+	public DateTimeOffset Timestamp { get; set; }
 
 	[JsonPropertyName("AirTemperature")]
-	public string? AirTemperature { get; set; }
+	public double AirTemperature { get; set; }
 
 	[JsonPropertyName("AirHumidity")]
-	public string? AirHumidity { get; set; }
+	public double AirHumidity { get; set; }
 
 	[JsonPropertyName("SoilTemperature")]
-	public string? SoilTemperature { get; set; }
+	public double SoilTemperature { get; set; }
 
 	[JsonPropertyName("SoilHumidity")]
-	public string? SoilHumidity { get; set; }
+	public double SoilHumidity { get; set; }
 
 	[JsonPropertyName("RainMm")]
-	public string? RainMm { get; set; }
+	public double RainMm { get; set; }
 
 	public static implicit operator SensorData(SensorReading sensorReading) => 
 		new(sensorReading.SensorId,
 			sensorReading.FarmId,
 			sensorReading.FieldId,
-			sensorReading.DateTime,
+			sensorReading.Timestamp,
 			sensorReading.AirTemperature,
 			sensorReading.AirHumidity,
 			sensorReading.SoilTemperature,

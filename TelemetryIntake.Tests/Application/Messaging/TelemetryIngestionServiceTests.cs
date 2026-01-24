@@ -28,11 +28,11 @@ public class TelemetryIngestionServiceTests
 								  Guid.Parse("49072487-10AE-4E48-8B10-50F076752D45"),
 								  Guid.Parse("7395FBD7-074B-4A2D-B7C2-92A16D2BDEA6"),
 								  DateTime.Now,
-								  "20",
-								  "50",
-								  "25",
-								  "75",
-								  "10");
+								  20,
+								  50,
+								  25,
+								  75,
+								  10);
 
 		// Act
 		await _serviceUnderTest.SendSensorDataToQueueAsync(sensorData);
