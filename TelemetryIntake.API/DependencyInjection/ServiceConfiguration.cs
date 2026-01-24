@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using Amazon;
+using Amazon.SQS;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Serilog;
 using Serilog.Formatting.Compact;
@@ -126,9 +128,23 @@ public static class ServiceConfiguration
 			});
 	}
 
-	public static void ConfigureSqsOptions(this IHostApplicationBuilder applicationBuilder)
+	public static void ConfigureAws(this IHostApplicationBuilder applicationBuilder)
 	{
-		var sqsOptions = applicationBuilder.Configuration.GetSection("SQS");
-		applicationBuilder.Services.Configure<SqsOptions>(sqsOptions);
+		var sqsOptionsConfigurationSection = applicationBuilder.Configuration.GetSection("SQS");
+		applicationBuilder.Services.Configure<SqsOptions>(sqsOptionsConfigurationSection);
+
+		var sqsOptions = sqsOptionsConfigurationSection.Get<SqsOptions>();
+
+		var region = string.IsNullOrWhiteSpace(sqsOptions?.Region) ? "us-east-1" : sqsOptions.Region;
+
+		applicationBuilder.Services.AddSingleton<IAmazonSQS>(_ =>
+		{
+			AmazonSQSConfig amazonSQSConfig = new AmazonSQSConfig
+			{
+				RegionEndpoint = RegionEndpoint.GetBySystemName(region)
+			};
+
+			return new AmazonSQSClient(amazonSQSConfig);
+		});
 	}
 }

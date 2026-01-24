@@ -9,7 +9,7 @@ builder.ConfigureDependencyInjectionServices();
 builder.ConfigureHealthCheckServices();
 builder.ConfigureLogging();
 builder.ConfigureCognitoM2MAuthentication();
-builder.ConfigureSqsOptions();
+builder.ConfigureAws();
 
 var app = builder.Build();
 

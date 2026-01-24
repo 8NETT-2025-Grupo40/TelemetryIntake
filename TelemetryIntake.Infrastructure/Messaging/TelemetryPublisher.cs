@@ -11,21 +11,20 @@ namespace TelemetryIntake.Infrastructure.Messaging;
 
 public class TelemetryPublisher : ITelemetryPublisher
 {
-	private readonly RegionEndpoint ServiceRegion = RegionEndpoint.USEast1;
-	private readonly AmazonSQSClient _client;
+	private readonly IAmazonSQS _client;
 	private readonly ILogger<TelemetryPublisher> _logger;
-	private readonly IOptions<SqsOptions> _options;
+	private readonly IOptions<SqsOptions> _sqsOptions;
 
-	public TelemetryPublisher(ILogger<TelemetryPublisher> logger, IOptions<SqsOptions> options)
+	public TelemetryPublisher(ILogger<TelemetryPublisher> logger, IOptions<SqsOptions> sqsOptions, IAmazonSQS client)
 	{
-		_client = new AmazonSQSClient(ServiceRegion);
 		_logger = logger;
-		_options = options;
+		_sqsOptions = sqsOptions;
+		_client = client;
 	}
 
 	public async ValueTask EnqueueSensorDataAsync(SensorData sensorData)
 	{
-		var queueName = _options.Value.QueueName;
+		var queueName = _sqsOptions.Value.QueueName;
 
 		if (string.IsNullOrWhiteSpace(queueName))
 		{
@@ -37,7 +36,7 @@ public class TelemetryPublisher : ITelemetryPublisher
 
 	private async ValueTask SendMessage(string jsonMessage)
 	{
-		var queueUrl = _options.Value.QueueUrl;
+		var queueUrl = _sqsOptions.Value.QueueUrl;
 
 		if (string.IsNullOrWhiteSpace(queueUrl))
 		{
