@@ -149,7 +149,7 @@ jobs:
               --name=telemetry-intake-api-sa \
               --attach-policy-arn=arn:aws:iam::${{ env.AWS_ACCOUNT_ID }}:policy/TelemetryIntakeExternalSecretsPolicy \
               --approve \
-              --region=${{ env.AWS_REGION }}
+              --region=${{ env.AWS_REGION }} \
               --override-existing-serviceaccounts
               
             echo "IRSA created successfully"
