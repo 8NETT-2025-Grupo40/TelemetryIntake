@@ -10,8 +10,8 @@ env:
     AWS_REGION: us-east-2
     ECR_REPOSITORY: telemetry-intake-api
     AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
-#    EKS_CLUSTER: #PREENCHER
-#    K8S_NAMESPACE: #PREENCHER
+    EKS_CLUSTER: agro-tech
+    K8S_NAMESPACE: telemetry-intake
     HELM_RELEASE_NAME: telemetry-intake-api
 
 jobs:

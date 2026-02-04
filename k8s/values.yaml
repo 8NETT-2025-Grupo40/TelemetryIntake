@@ -1,7 +1,7 @@
 # Configuração da imagem Docker no ECR (Elastic Container Registry)
 # O workflow do GitHub Actions sobrescreve a tag com o SHA do commit
 image:
-  repository: "" #PREENCHER
+  repository: "431104159307.dkr.ecr.us-east-1.amazonaws.com/telemetry-intake-api"
   tag: "latest"
   pullPolicy: IfNotPresent
 
@@ -41,8 +41,8 @@ ingress:
     # target-type: ip = ALB roteia diretamente para IPs dos pods (mais eficiente)
     alb.ingress.kubernetes.io/target-type: ip
     # group.name: permite múltiplos Ingress compartilharem o mesmo ALB
-    # Todas as APIs com group.name=#PREENCHER usarão o mesmo ALB
-    alb.ingress.kubernetes.io/group.name: #PREENCHER
+    # Todas as APIs com group.name=agro-tech usarão o mesmo ALB
+    alb.ingress.kubernetes.io/group.name: agro-tech
     # healthcheck-path: endpoint usado pelo ALB para verificar saúde dos pods
     alb.ingress.kubernetes.io/healthcheck-path: /health
     alb.ingress.kubernetes.io/listen-ports: '[{"HTTP":80}]'
@@ -83,7 +83,8 @@ env:
 # 1. telemetry-intake-api-user-connection-string: connection string do banco RDS
 # 2. fcg-jwt-config: JSON com { "issuer", "audience", "key" } #PREENCHER E MUDAR
 secrets:
-  # Deixe vazio - External Secrets faz a sincronização automaticamente
+  sqsQueueUrl:
+    awsSecretName: "field-monitoring-sqs-queue-url"
 
 # HPA (Horizontal Pod Autoscaler) - escalonamento automático baseado em métricas
 # Aumenta/diminui número de pods automaticamente baseado em carga
