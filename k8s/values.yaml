@@ -81,7 +81,7 @@ env:
 # 
 # Secrets necessários no AWS Secrets Manager:
 # 1. telemetry-intake-api-user-connection-string: connection string do banco RDS
-# 2. fcg-jwt-config: JSON com { "issuer", "audience", "key" } #PREENCHER E MUDAR
+# 2. fcg-jwt-config: JSON com { "issuer", "audience", "key" }
 secrets:
   sqsQueueUrl:
     awsSecretName: "field-monitoring-sqs-queue-url"
