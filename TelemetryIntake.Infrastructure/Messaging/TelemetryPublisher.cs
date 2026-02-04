@@ -22,17 +22,8 @@ public class TelemetryPublisher : ITelemetryPublisher
 		_client = client;
 	}
 
-	public async ValueTask EnqueueSensorDataAsync(SensorData sensorData)
-	{
-		var queueName = _sqsOptions.Value.QueueName;
-
-		if (string.IsNullOrWhiteSpace(queueName))
-		{
-			throw new Exception("Queue name is empty - Data not sent");
-		}
-
+	public async ValueTask EnqueueSensorDataAsync(SensorData sensorData) => 
 		await SendMessage(JsonSerializer.Serialize(sensorData));
-	}
 
 	private async ValueTask SendMessage(string jsonMessage)
 	{
