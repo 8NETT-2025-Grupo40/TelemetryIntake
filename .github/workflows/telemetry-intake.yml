@@ -197,11 +197,17 @@ jobs:
         run: |
           echo "Waiting for External Secrets to sync..."
             
-          kubectl wait --for=condition=Ready \
+          if ! kubectl wait --for=condition=Ready \
             externalsecret/telemetry-intake-api-externalsecret \
             -n ${{ env.K8S_NAMESPACE }} \
-            --timeout=120s
-            
+            --timeout=120s; then
+
+            echo ""
+            echo "ExternalSecret failed to become Ready. Debug info:"
+            kubectl describe externalsecret telemetry-intake-api-externalsecret -n ${{ env.K8S_NAMESPACE }}
+
+            exit 1
+          fi
           echo "External Secrets synced successfully"
         
       # Verifica se o deployment foi concluído com sucesso
