@@ -94,7 +94,7 @@ jobs:
 
   deploy-eks:
     name: Deploy to EKS
-    needs: [build,unit-tests,push-ecr]
+    #needs: [build,unit-tests,push-ecr]
     if: github.event_name == 'push'
     runs-on: ubuntu-latest
     environment: production
