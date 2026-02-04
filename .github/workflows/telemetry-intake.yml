@@ -150,6 +150,7 @@ jobs:
               --attach-policy-arn=arn:aws:iam::${{ env.AWS_ACCOUNT_ID }}:policy/TelemetryIntakeExternalSecretsPolicy \
               --approve \
               --region=${{ env.AWS_REGION }}
+              --override-existing-serviceaccounts
               
             echo "IRSA created successfully"
             echo "Waiting 30s for IAM propagation..."
