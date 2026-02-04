@@ -38,6 +38,23 @@ spec:
                 secretKeyRef:
                   name: {{ include "telemetry-intake-api.fullname" . }}-secrets
                   key: sqsQueueUrl
+
+            # Cognito config (extraido do JSON secret)
+            - name: COGNITO_REGION
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "telemetry-intake-api.fullname" . }}-secrets
+                  key: cognitoRegion
+            - name: COGNITO_USER_POOL_ID
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "telemetry-intake-api.fullname" . }}-secrets
+                  key: cognitoUserPoolId
+            - name: COGNITO_CLIENT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "telemetry-intake-api.fullname" . }}-secrets
+                  key: cognitoClientId                                    
           # Readiness probe: Kubernetes espera passar antes de enviar tráfego
           # Se falhar, pod é removido do Service (não recebe requisições)
           # Readiness probe: Kubernetes espera passar antes de enviar tráfego

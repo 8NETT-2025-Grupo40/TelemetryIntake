@@ -72,7 +72,7 @@ resources:
 env:
   ASPNETCORE_URLS: "http://+:7287"
   ASPNETCORE_ENVIRONMENT: "Production"
-  AWS__Region: "us-east-2"
+  AWS__Region: "us-east-1"
   # OTEL Collector é sidecar - comunicação via localhost
   OTEL_EXPORTER_OTLP_ENDPOINT: "http://localhost:4317"
 
@@ -85,6 +85,8 @@ env:
 secrets:
   sqsQueueUrl:
     awsSecretName: "field-monitoring-sqs-queue-url"
+  cognitoConfig:
+    awsSecretName: "field-monitoring-cognito-config"    
 
 # HPA (Horizontal Pod Autoscaler) - escalonamento automático baseado em métricas
 # Aumenta/diminui número de pods automaticamente baseado em carga
