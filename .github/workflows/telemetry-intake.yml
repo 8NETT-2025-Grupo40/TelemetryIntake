@@ -8,7 +8,7 @@ on:
 
 env:
     AWS_REGION: us-east-2
-    ECR_REPOSITORY: telemetry-intake-api
+    ECR_REPOSITORY: 431104159307.dkr.ecr.us-east-1.amazonaws.com/telemetry-intake-api
     AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
     EKS_CLUSTER: agro-tech
     K8S_NAMESPACE: telemetry-intake
