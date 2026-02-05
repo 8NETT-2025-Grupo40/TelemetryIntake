@@ -218,7 +218,7 @@ jobs:
         run: |
           echo "Verifying deployment rollout..."
             
-          DEPLOYMENT_NAME="${{ env.K8S_NAMESPACE }}-${{ env.HELM_RELEASE_NAME }}"
+          DEPLOYMENT_NAME="${{ env.HELM_RELEASE_NAME }}"
             
           kubectl rollout status deployment/$DEPLOYMENT_NAME -n ${{ env.K8S_NAMESPACE }} --timeout=10m
             
