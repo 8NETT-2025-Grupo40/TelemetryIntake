@@ -11,7 +11,7 @@ env:
     ECR_REPOSITORY: telemetry-intake-api
     AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
     EKS_CLUSTER: agro-tech
-    K8S_NAMESPACE: telemetry-intake
+    K8S_NAMESPACE: agro-tech
     HELM_RELEASE_NAME: telemetry-intake-api
 
 jobs:
@@ -147,10 +147,9 @@ jobs:
               --cluster=${{ env.EKS_CLUSTER }} \
               --namespace=${{ env.K8S_NAMESPACE }} \
               --name=telemetry-intake-api-sa \
-              --attach-policy-arn=arn:aws:iam::${{ env.AWS_ACCOUNT_ID }}:policy/TelemetryIntakeExternalSecretsPolicy \
+              --attach-policy-arn=arn:aws:iam::${{ env.AWS_ACCOUNT_ID }}:policy/AgroTechExternalSecretsPolicy  \
               --approve \
-              --region=${{ env.AWS_REGION }} \
-              --override-existing-serviceaccounts
+              --region=${{ env.AWS_REGION }}
               
             echo "IRSA created successfully"
             echo "Waiting 30s for IAM propagation..."
