@@ -11,7 +11,7 @@ env:
     ECR_REPOSITORY: telemetry-intake-api
     AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
     EKS_CLUSTER: agro-tech
-    K8S_NAMESPACE: agro-tech
+    K8S_NAMESPACE: telemetry-intake
     HELM_RELEASE_NAME: telemetry-intake-api
 
 jobs:
