@@ -3,7 +3,7 @@
 image:
   repository: "431104159307.dkr.ecr.us-east-1.amazonaws.com/telemetry-intake-api"
   tag: "latest"
-  pullPolicy: IfNotPresent
+  pullPolicy: Always
 
 # Imagem AWS OTEL Collector (sidecar observability)
 otelCollector:
