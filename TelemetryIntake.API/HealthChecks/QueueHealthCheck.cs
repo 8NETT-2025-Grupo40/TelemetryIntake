@@ -25,9 +25,6 @@ public class QueueHealthCheck : IHealthCheck
 
 	public async Task<HealthCheckResult> CheckHealthAsync(HealthCheckContext context, CancellationToken cancellationToken = default)
 	{
-		// This ensures SecurityToken assembly is referenced and included
-		var dummy = typeof(Amazon.SecurityToken.AmazonSecurityTokenServiceClient);
-
 		var healthyResult = await ValidateQueue();
 
 		if (healthyResult.IsSuccessful)
