@@ -54,7 +54,12 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: {{ include "telemetry-intake-api.fullname" . }}-secrets
-                  key: cognitoClientId                                    
+                  key: cognitoClientId
+            - name: OTEL_SERVICE_NAME
+              value: {{ .Values.env.OTEL_SERVICE_NAME | quote }}
+            - name: OTEL_DOTNET_AUTO_TRACES_ADDITIONAL_SOURCES
+              value: {{ .Values.env.OTEL_DOTNET_AUTO_TRACES_ADDITIONAL_SOURCES | quote }}                                          
+                                          
           # Readiness probe: Kubernetes espera passar antes de enviar tráfego
           # Se falhar, pod é removido do Service (não recebe requisições)
           # Readiness probe: Kubernetes espera passar antes de enviar tráfego
