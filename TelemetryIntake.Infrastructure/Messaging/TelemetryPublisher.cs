@@ -3,7 +3,9 @@ using Amazon.SQS;
 using Amazon.SQS.Model;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using System.Diagnostics;
 using System.Text.Json;
+using TelemetryIntake.Application.Observability;
 using TelemetryIntake.Domain.Interfaces.Messaging;
 using TelemetryIntake.Domain.Sensor.Entities;
 
@@ -22,18 +24,41 @@ public class TelemetryPublisher : ITelemetryPublisher
 		_client = client;
 	}
 
-	public async ValueTask EnqueueSensorDataAsync(SensorData sensorData) => 
-		await SendMessage(JsonSerializer.Serialize(sensorData));
-
-	private async ValueTask SendMessage(string jsonMessage)
+	public async ValueTask EnqueueSensorDataAsync(SensorData sensorData)
 	{
-		var queueUrl = _sqsOptions.Value.QueueUrl;
+		var activity = TelemetryIntakeObservabilityHandler.StartActivity(TelemetryIntakeObservabilityHandler.ActivitySourceName);
 
-		if (string.IsNullOrWhiteSpace(queueUrl))
+		try
 		{
-			throw new Exception("Queue url is empty - Data not sent");
-		}
+			var queueUrl = _sqsOptions.Value.QueueUrl;
 
+			if (string.IsNullOrWhiteSpace(queueUrl))
+			{
+				throw new Exception("Queue url is empty - Data not sent");
+			}
+
+			TelemetryIntakeObservabilityHandler.SetSqsContext(activity, sensorData.FieldId, sensorData.FarmId, sensorData.SensorId, queueUrl);
+
+			TelemetryIntakeObservabilityHandler.MarkProcessing(activity);
+
+			await SendMessage(JsonSerializer.Serialize(sensorData), queueUrl);
+
+			TelemetryIntakeObservabilityHandler.MarkSuccess(activity);
+		}
+		catch (Exception e)
+		{
+			_logger.LogError("Could not send message to queue\n{Message}", e.Message);
+
+			TelemetryIntakeObservabilityHandler.RecordException(activity, e);
+			
+			TelemetryIntakeObservabilityHandler.MarkFailure(activity, e.Message);
+
+			throw;
+		}
+	}
+
+	private async ValueTask SendMessage(string jsonMessage, string queueUrl)
+	{
 		var sendMessageRequest = new SendMessageRequest
 		{
 			MessageBody = jsonMessage,
@@ -42,14 +67,6 @@ public class TelemetryPublisher : ITelemetryPublisher
 			MessageDeduplicationId = Guid.NewGuid().ToString()
 		};
 
-		try
-		{
-			var response = await _client.SendMessageAsync(sendMessageRequest);
-		}
-		catch (Exception e)
-		{
-			_logger.LogError("Could not send message to queue\n{Message}", e.Message);
-			throw;
-		}
+		_ = await _client.SendMessageAsync(sendMessageRequest);
 	}
 }
