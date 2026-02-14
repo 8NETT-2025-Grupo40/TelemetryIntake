@@ -1,7 +1,7 @@
 name: Telemetry Intake CI/CD Pipeline
 on:
   push:
-    branches: [ '*' ]
+    branches: [ 'main' ]
   pull_request:
     types: [opened, synchronize]
   workflow_dispatch:
@@ -62,9 +62,9 @@ jobs:
 
   push-ecr:
       name: Deploy docker image on Elastic Container Registry
-      #needs: [build,unit-tests]
-      #environment: production
-      #if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
+      needs: [build,unit-tests]
+      environment: production
+      if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
       runs-on: ubuntu-latest
 
       steps:
@@ -94,7 +94,7 @@ jobs:
 
   deploy-eks:
     name: Deploy to EKS
-    #needs: [build,unit-tests,push-ecr]
+    needs: [build,unit-tests,push-ecr]
     if: github.event_name == 'push'
     runs-on: ubuntu-latest
     environment: production
