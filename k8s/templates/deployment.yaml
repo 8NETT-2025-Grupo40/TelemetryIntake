@@ -50,7 +50,7 @@ spec:
                 secretKeyRef:
                   name: {{ include "telemetry-intake-api.fullname" . }}-secrets
                   key: cognitoUserPoolId
-            - name: COGNITO_CLIENT_ID
+            - name: COGNITO_M2M_CLIENT_ID
               valueFrom:
                 secretKeyRef:
                   name: {{ include "telemetry-intake-api.fullname" . }}-secrets
