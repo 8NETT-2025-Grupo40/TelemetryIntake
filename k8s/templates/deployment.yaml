@@ -20,9 +20,6 @@ spec:
         - name: api
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
-          # Adiciona o wrapper OTEL
-          command: ["/otel-dotnet-instrumentation"]
-          args: ["dotnet", "TelemetryIntake.API.dll"]
           ports:
             - containerPort: {{ .Values.containerPort }}
           env:
