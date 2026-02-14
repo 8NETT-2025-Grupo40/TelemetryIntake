@@ -58,7 +58,10 @@ spec:
             - name: OTEL_SERVICE_NAME
               value: {{ .Values.env.OTEL_SERVICE_NAME | quote }}
             - name: OTEL_DOTNET_AUTO_TRACES_ADDITIONAL_SOURCES
-              value: {{ .Values.env.OTEL_DOTNET_AUTO_TRACES_ADDITIONAL_SOURCES | quote }}                                          
+              value: {{ .Values.env.OTEL_DOTNET_AUTO_TRACES_ADDITIONAL_SOURCES | quote }}
+            # OTEL para CloudWatch Agent DaemonSet (Application Signals)
+            - name: OTEL_EXPORTER_OTLP_ENDPOINT
+              value: {{ .Values.env.OTEL_EXPORTER_OTLP_ENDPOINT | quote }}                                     
                                           
           # Readiness probe: Kubernetes espera passar antes de enviar tráfego
           # Se falhar, pod é removido do Service (não recebe requisições)

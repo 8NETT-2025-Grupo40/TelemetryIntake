@@ -74,8 +74,8 @@ env:
   ASPNETCORE_ENVIRONMENT: "Production"
   AWS__Region: "us-east-1"
   # OTEL Collector é sidecar - comunicação via localhost
-  OTEL_SERVICE_NAME: field-monitoring-api
-  OTEL_DOTNET_AUTO_TRACES_ADDITIONAL_SOURCES: FieldMonitoring
+  OTEL_SERVICE_NAME: telemetry-intake-api
+  OTEL_DOTNET_AUTO_TRACES_ADDITIONAL_SOURCES: TelemetryIntake
   # OTEL envia traces para CloudWatch Agent DaemonSet (Application Signals)
   OTEL_EXPORTER_OTLP_ENDPOINT: http://cloudwatch-agent.amazon-cloudwatch.svc.cluster.local:4315
 

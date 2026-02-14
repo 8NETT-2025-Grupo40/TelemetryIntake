@@ -13,7 +13,7 @@ public static class TelemetryIntakeObservabilityHandler
 	private const string AttributeMessagingDestinationName = "messaging.destination.name";
 	private const string AttributeMessagingMessageId = "messaging.message.id";
 
-	private const string AttributeProcessingStatus = "fieldmonitoring.processing.status";
+	private const string AttributeProcessingStatus = "telemetry-intake.processing.status";
 
 	public static readonly ActivitySource ActivitySource = new(ActivitySourceName);
 	
