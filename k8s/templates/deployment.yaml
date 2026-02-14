@@ -12,7 +12,12 @@ spec:
     matchLabels: {{- include "telemetry-intake-api.selectorLabels" . | nindent 6 }}
   template:
     metadata:
-      labels: {{- include "telemetry-intake-api.selectorLabels" . | nindent 8 }}
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "field-monitoring-api.selectorLabels" . | nindent 8 }}
     spec:
       # ServiceAccount com IRSA permite acesso ao AWS Secrets Manager
       serviceAccountName: {{ include "telemetry-intake-api.serviceAccountName" . }}
