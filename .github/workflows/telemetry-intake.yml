@@ -97,7 +97,7 @@ jobs:
     #needs: [build,unit-tests,push-ecr]
     if: github.event_name == 'push'
     runs-on: ubuntu-latest
-    #environment: production
+    environment: production
       
     steps:
       - name: Checkout code

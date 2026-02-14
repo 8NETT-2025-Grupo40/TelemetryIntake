@@ -5,26 +5,19 @@ image:
   tag: "latest"
   pullPolicy: Always
 
-# Imagem AWS OTEL Collector (sidecar observability)
-otelCollector:
-  repository: "public.ecr.aws/aws-observability/aws-otel-collector"
-  tag: "v0.45.0"
-  pullPolicy: IfNotPresent
-
 # Número de pods que serão criados inicialmente
 # O HPA (Horizontal Pod Autoscaler) pode aumentar/diminuir baseado em carga
 replicaCount: 2
 
 # Porta exposta pelo container ASP.NET Core
 containerPort: 7287
-# Porta do OTEL Collector (gRPC)
-otelCollectorPort: 4317
 
 # Service expõe os pods internamente no cluster
 # ClusterIP = apenas acessível dentro do cluster (não exposto externamente)
 service:
   type: ClusterIP
   port: 80
+  targetPort: 7287
 
 # Ingress cria um ALB (Application Load Balancer) para acesso externo
 # O AWS Load Balancer Controller converte esse recurso em um ALB real na AWS
@@ -59,14 +52,6 @@ resources:
     limits:
       cpu: 500m      # 0.5 CPU
       memory: 512Mi  # 512 megabytes
-  # OTEL Collector sidecar (leve)
-  otelCollector:
-    requests:
-      cpu: 50m
-      memory: 64Mi
-    limits:
-      cpu: 200m
-      memory: 128Mi
 
 # Variáveis de ambiente não sensíveis (valores públicos)
 env:
@@ -116,7 +101,7 @@ fullnameOverride: telemetry-intake-api
 livenessProbe:
   httpGet:
     path: /monitoring/health
-    port: 5066
+    port: 7287
   initialDelaySeconds: 30
   periodSeconds: 20
   timeoutSeconds: 5
@@ -125,7 +110,7 @@ livenessProbe:
 readinessProbe:
   httpGet:
     path: /monitoring/ready
-    port: 5066
+    port: 7287
   initialDelaySeconds: 10
   periodSeconds: 10
   timeoutSeconds: 3
