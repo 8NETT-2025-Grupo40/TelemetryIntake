@@ -1,7 +1,7 @@
 name: Telemetry Intake CI/CD Pipeline
 on:
   push:
-    branches: [ 'main' ]
+    branches: [ '*' ]
   pull_request:
     types: [opened, synchronize]
   workflow_dispatch:
