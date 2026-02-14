@@ -62,8 +62,8 @@ jobs:
 
   push-ecr:
       name: Deploy docker image on Elastic Container Registry
-      #needs: [build,unit-tests]
-      #environment: production
+      needs: [build,unit-tests]
+      environment: production
       if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
       runs-on: ubuntu-latest
 
@@ -94,7 +94,7 @@ jobs:
 
   deploy-eks:
     name: Deploy to EKS
-    #needs: [build,unit-tests,push-ecr]
+    needs: [build,unit-tests,push-ecr]
     if: github.event_name == 'push'
     runs-on: ubuntu-latest
     environment: production

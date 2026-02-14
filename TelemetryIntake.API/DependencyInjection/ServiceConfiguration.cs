@@ -86,6 +86,7 @@ public static class ServiceConfiguration
 						var tokenUse = ctx.Principal?.FindFirst("token_use")?.Value;
 						if (!string.Equals(tokenUse, "access", StringComparison.Ordinal))
 						{
+							Console.WriteLine("invalid token_use");
 							ctx.Fail("invalid token_use");
 							return Task.CompletedTask;
 						}
@@ -95,6 +96,7 @@ public static class ServiceConfiguration
 						var clientIdClaim = ctx.Principal?.FindFirst("client_id")?.Value;
 						if (!string.Equals(clientIdClaim, m2mClientId, StringComparison.Ordinal))
 						{
+							Console.WriteLine("invalid client_id");
 							ctx.Fail("invalid client_id");
 							return Task.CompletedTask;
 						}
