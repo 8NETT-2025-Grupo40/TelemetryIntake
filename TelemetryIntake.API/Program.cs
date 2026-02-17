@@ -19,5 +19,6 @@ app.UseHttpsRedirection();
 
 app.MapDataEndpoints();
 app.MapHealthCheckEndpoints();
+app.MapApiHealthEndpoints();
 
 app.Run();
